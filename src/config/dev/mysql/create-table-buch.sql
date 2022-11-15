@@ -26,7 +26,7 @@
 -- https://dev.mysql.com/blog-archive/mysql-8-0-16-introducing-check-constraint
 -- impliziter Index als B-Baum durch UNIQUE
 
-CREATE TABLE IF NOT EXISTS buch (
+CREATE TABLE IF NOT EXISTS hersteller (
     id            CHAR(36) NOT NULL PRIMARY KEY,
     version       INT NOT NULL DEFAULT 0,
     titel         VARCHAR(40) UNIQUE NOT NULL,

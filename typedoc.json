@@ -12,8 +12,8 @@
       "NodeConfig",
       "Links",
       "CustomErrorMessages",
-      "BuchCreateDTO",
-      "BuchUpdateDTO",
+      "HerstellerCreateDTO",
+      "HerstellerUpdateDTO",
       "Login",
       "LoginInput",
       "Payload"

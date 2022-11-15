@@ -21,12 +21,12 @@ import {
 } from '@nestjs/common';
 import { ApolloDriver } from '@nestjs/apollo';
 import { AuthModule } from './security/auth/auth.module.js';
-import { BuchGetController } from './buch/rest/hersteller-get.controller.js';
-import { BuchModule } from './buch/buch.module.js';
-import { BuchWriteController } from './buch/rest/hersteller-write.controller.js';
 import { DevModule } from './config/dev/dev.module.js';
 import { GraphQLModule } from '@nestjs/graphql';
 import { HealthModule } from './health/health.module.js';
+import { HerstellerGetController } from './hersteller/rest/hersteller-get.controller.js';
+import { HerstellerModule } from './hersteller/hersteller.module.js';
+import { HerstellerWriteController } from './hersteller/rest/hersteller-write.controller.js';
 import { LoggerModule } from './logger/logger.module.js';
 import { RequestLoggerMiddleware } from './logger/request-logger.middleware.js';
 import { TypeOrmModule } from '@nestjs/typeorm';
@@ -36,7 +36,7 @@ import { typeOrmModuleOptions } from './config/db.js';
 @Module({
     imports: [
         AuthModule,
-        BuchModule,
+        HerstellerModule,
         DevModule,
         GraphQLModule.forRoot({
             typePaths: ['./**/*.graphql'],
@@ -54,8 +54,8 @@ export class AppModule implements NestModule {
         consumer
             .apply(RequestLoggerMiddleware)
             .forRoutes(
-                BuchGetController,
-                BuchWriteController,
+                HerstellerGetController,
+                HerstellerWriteController,
                 'auth',
                 'graphql',
             );

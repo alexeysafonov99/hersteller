@@ -30,7 +30,7 @@ node "Nest" {
 
   [BuchService]
 
-  [Repository<Buch>]
+  [Repository<Hersteller>]
 
   [MailService]
 }
@@ -44,8 +44,8 @@ cloud {
     [nodemailer]
 }
 
-database "DB buch" {
-    [Tabelle buch]
+database "DB hersteller" {
+    [Tabelle hersteller]
     [Tabelle schlagwort]
 }
 
@@ -61,10 +61,10 @@ GraphQLClient ~~> [RequestLoggerMiddleware]
 
 [BuchController] ..> [BuchService]
 [BuchResolver] ..> [BuchService]
-[BuchService] ..> [Repository<Buch>]
+[BuchService] ..> [Repository<Hersteller>]
 
-[Repository<Buch>] ~~> [TypeORM]
-[TypeORM] ~~> [Tabelle buch]
+[Repository<Hersteller>] ~~> [TypeORM]
+[TypeORM] ~~> [Tabelle hersteller]
 [TypeORM] ~~> [Tabelle schlagwort]
 
 [BuchService] ..> [MailService]

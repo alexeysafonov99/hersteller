@@ -77,7 +77,7 @@ pipeline {
 
                 // https://www.jenkins.io/doc/pipeline/steps/git
                 // "named arguments" statt Funktionsaufruf mit Klammern
-                git url: 'https://github.com/juergenzimmermann/buch', branch: 'main', poll: true
+                git url: 'https://github.com/alexeysafonov99/hersteller', branch: 'main', poll: true
             }
         }
 
@@ -197,14 +197,14 @@ pipeline {
 
                 success {
                     script {
-                        if (fileExists("${env.WORKSPACE}/buch.zip")) {
-                            sh 'rm buch.zip'
+                        if (fileExists("${env.WORKSPACE}/hersteller.zip")) {
+                            sh 'rm hersteller.zip'
                         }
                     }
                     // https://www.jenkins.io/doc/pipeline/steps/pipeline-utility-steps/#zip-create-zip-file
-                    zip zipFile: 'buch.zip', archive: false, dir: 'dist'
-                    // jobs/buch/builds/.../archive/buch.zip
-                    archiveArtifacts 'buch.zip'
+                    zip zipFile: 'hersteller.zip', archive: false, dir: 'dist'
+                    // jobs/hersteller/builds/.../archive/hersteller.zip
+                    archiveArtifacts 'hersteller.zip'
                 }
             }
         }
@@ -213,7 +213,7 @@ pipeline {
             steps {
               echo 'TODO: Docker-Image bauen: dockerd starten, pack installieren'
               // Docker-Installation und laufender Docker-Daemon erforderlich
-              // sh 'docker build --tag juergenzimmermann/buch:1.0.0 .'
+              // sh 'docker build --tag juergenzimmermann/hersteller:1.0.0 .'
             }
         }
 

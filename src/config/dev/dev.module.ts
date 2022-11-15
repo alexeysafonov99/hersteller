@@ -15,14 +15,14 @@
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 import { AuthModule } from '../../security/auth/auth.module.js';
-import { Buch } from '../../buch/entity/hersteller.entity.js';
 import { DbPopulateController } from './db-populate.controller.js';
 import { DbPopulateService } from './db-populate.service.js';
+import { Hersteller } from '../../hersteller/entity/hersteller.entity.js';
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 @Module({
-    imports: [TypeOrmModule.forFeature([Buch]), AuthModule],
+    imports: [TypeOrmModule.forFeature([Hersteller]), AuthModule],
     controllers: [DbPopulateController],
     providers: [DbPopulateService],
     exports: [DbPopulateService],

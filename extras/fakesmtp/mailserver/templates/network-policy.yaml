@@ -31,9 +31,9 @@ spec:
     - from:
         - podSelector:
             matchLabels:
-              app: buch
-              app.kubernetes.io/name: buch
-              app.kubernetes.io/instance: buch
+              app: hersteller
+              app.kubernetes.io/name: hersteller
+              app.kubernetes.io/instance: hersteller
       ports:
         - port: smtp
           protocol: TCP

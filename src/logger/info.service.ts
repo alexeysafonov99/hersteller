@@ -36,12 +36,13 @@ import process from 'node:process';
 @Injectable()
 export class InfoService implements OnApplicationBootstrap {
     readonly #banner = `
-        .       __                                    _____
-        .      / /_  _____  _________ ____  ____     /__  /
-        . __  / / / / / _ \\/ ___/ __ \`/ _ \\/ __ \\      / /
-        ./ /_/ / /_/ /  __/ /  / /_/ /  __/ / / /     / /___
-        .\\____/\\__,_/\\___/_/   \\__, /\\___/_/ /_/     /____(_)
-        .                     /____/
+       :::        :::        ::::::::::       :::    :::       ::::::::::    :::   :::        ::::::::          
+    :+: :+:      :+:        :+:              :+:    :+:       :+:           :+:   :+:       :+:    :+:          
+  +:+   +:+     +:+        +:+               +:+  +:+        +:+            +:+ +:+        +:+                  
++#++:++#++:    +#+        +#++:++#           +#++:+         +#++:++#        +#++:         +#++:++#++            
++#+     +#+    +#+        +#+               +#+  +#+        +#+              +#+                 +#+             
+#+#     #+#    #+#        #+#              #+#    #+#       #+#              #+#          #+#    #+#      #+#     
+###     ###    ########## ##########       ###    ###       ##########       ###           ########       ###                   
     `;
 
     readonly #logger = getLogger(InfoService.name);
@@ -54,7 +55,7 @@ export class InfoService implements OnApplicationBootstrap {
             nodeConfig;
         const isK8s = k8sConfig.detected;
         const plattform = isK8s
-            ? `Kubernetes: BUCH_SERVICE_HOST=${serviceHost}, BUCH_SERVICE_PORT=${servicePort}`
+            ? `Kubernetes: HERSTELLER_SERVICE_HOST=${serviceHost}, HERSTELLER_SERVICE_PORT=${servicePort}`
             : 'Kubernetes: N/A';
 
         this.#logger.info(this.#stripIndent(this.#banner));

@@ -19,7 +19,7 @@
 
 # "Param" muss in der 1. Zeile sein
 Param (
-    [string]$service = 'buch'
+    [string]$service = 'hersteller'
 )
 
 Set-StrictMode -Version Latest

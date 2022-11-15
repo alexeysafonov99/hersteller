@@ -125,9 +125,9 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur arcu erat,
 accumsan id imperdiet et, porttitor at sem.
 
 .Entity
-[plantuml,Buch,svg]
+[plantuml,Hersteller,svg]
 ----
-include::Buch.plantuml[]
+include::Hersteller.plantuml[]
 ----
 
 == Programmierrichtlinien für TypeScript und JavaScript

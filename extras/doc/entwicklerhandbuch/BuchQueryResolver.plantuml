@@ -35,9 +35,9 @@ package @nestjs/graphql {
   Resolver .left[hidden].> Promise
 }
 
-package buch {
+package hersteller {
   package entity {
-    class Buch <<entity>>
+    class Hersteller <<entity>>
   }
 
   package service {
@@ -45,7 +45,7 @@ package buch {
   }
 
   package graphql #DDDDDD {
-    class "type BuchDTO = Omit<Buch, 'aktualisiert' | 'erzeugt' | 'schlagwoerter'> & { schlagwoerter: string[] }" as BuchDTO
+    class "type BuchDTO = Omit<Hersteller, 'aktualisiert' | 'erzeugt' | 'schlagwoerter'> & { schlagwoerter: string[] }" as BuchDTO
     hide BuchDTO circle
 
     class BuchQueryResolver << control >> << @Resolver() >> << @UseInterceptors() >> {
@@ -55,15 +55,15 @@ package buch {
 
     BuchQueryResolver o-up-> "1" BuchReadService : service
     BuchQueryResolver ..> BuchDTO
-    BuchDTO ..> Buch
+    BuchDTO ..> Hersteller
     BuchQueryResolver ..> Resolver
 
     BuchQueryResolver ..> Promise
 
-    BuchDTO .[hidden].> Buch
-    Buch .[hidden].> Promise
+    BuchDTO .[hidden].> Hersteller
+    Hersteller .[hidden].> Promise
     BuchReadService .[hidden].> Promise
-    Buch .[hidden].> Resolver
+    Hersteller .[hidden].> Resolver
     BuchReadService .[hidden].> Resolver
   }
 }

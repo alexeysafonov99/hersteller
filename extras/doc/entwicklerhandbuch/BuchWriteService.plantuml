@@ -37,9 +37,9 @@ package mail {
   class MailService
 }
 
-package buch {
+package hersteller {
   package entity {
-    class Buch
+    class Hersteller
   }
 
   package service #DDDDDD {
@@ -50,8 +50,8 @@ package buch {
     class VersionOutdated
 
     class BuchWriteService << control >> <<@Injectable()>> {
-      + async create(buch: Buch): Promise<string|BuchInvalid|TitelExists|IsbnExists>
-      + async update(id: string, buch: Buch, version: string): Promise<number|BuchInvalid|TitelExists|IsbnExists|VersionInvalid|VersionOutdated>
+      + async create(hersteller: Hersteller): Promise<string|BuchInvalid|TitelExists|IsbnExists>
+      + async update(id: string, hersteller: Hersteller, version: string): Promise<number|BuchInvalid|TitelExists|IsbnExists|VersionInvalid|VersionOutdated>
       + async delete(id: string): Promise<boolean>
     }
 
@@ -64,18 +64,18 @@ package buch {
     BuchWriteService .up.> InjectRepository
 
     BuchWriteService .up.> Promise
-    BuchWriteService ..> Buch
+    BuchWriteService ..> Hersteller
     BuchWriteService .up.> BuchInvalid
     BuchWriteService .up.> TitelExists
     BuchWriteService .up.> IsbnExists
     BuchWriteService .up.> VersionInvalid
     BuchWriteService .up.> VersionOutdated
 
-    BuchInvalid .up[hidden].> Buch
-    Buch .up[hidden].> Promise
-    Buch .up[hidden].> Injectable
-    Buch .up[hidden].> InjectRepository
-    TitelExists .up[hidden].> Buch
+    BuchInvalid .up[hidden].> Hersteller
+    Hersteller .up[hidden].> Promise
+    Hersteller .up[hidden].> Injectable
+    Hersteller .up[hidden].> InjectRepository
+    TitelExists .up[hidden].> Hersteller
     BuchValidationService .[hidden].> Repository
     BuchValidationService .[hidden].> MailService
   }

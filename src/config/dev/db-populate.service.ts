@@ -1,3 +1,5 @@
+/* eslint-disable eslint-comments/disable-enable-pair */
+/* eslint-disable sort-imports */
 /*
  * Copyright (C) 2021 - present Juergen Zimmermann, Florian Goebel, Hochschule Karlsruhe
  *
@@ -19,16 +21,14 @@
  * Das Modul enthält die Funktion, um die Test-DB neu zu laden.
  * @packageDocumentation
  */
-
-import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
 import { dbPopulate, typeOrmModuleOptions } from '../db.js';
-import { Buch } from '../../buch/entity/hersteller.entity.js';
+import { Injectable, type OnApplicationBootstrap } from '@nestjs/common';
+import { configDir } from '../node.js';
+import { Hersteller } from '../../hersteller/entity/hersteller.entity.js';
+import { herstellers } from './testdaten.js';
+import { getLogger } from '../../logger/logger.js';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Schlagwort } from '../../buch/entity/schlagwort.entity.js';
-import { buecher } from './testdaten.js';
-import { configDir } from '../node.js';
-import { getLogger } from '../../logger/logger.js';
 import { readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
@@ -38,16 +38,16 @@ import { resolve } from 'node:path';
  */
 @Injectable()
 export class DbPopulateService implements OnApplicationBootstrap {
-    readonly #repo: Repository<Buch>;
+    readonly #repo: Repository<Hersteller>;
 
     readonly #logger = getLogger(DbPopulateService.name);
 
-    readonly #buecher = buecher;
+    readonly #herstellers = herstellers;
 
     /**
-     * Initialisierung durch DI mit `Repository<Buch>` gemäß _TypeORM_.
+     * Initialisierung durch DI mit `Repository<Hersteller>` gemäß _TypeORM_.
      */
-    constructor(@InjectRepository(Buch) repo: Repository<Buch>) {
+    constructor(@InjectRepository(Hersteller) repo: Repository<Hersteller>) {
         this.#repo = repo;
     }
 
@@ -69,7 +69,7 @@ export class DbPopulateService implements OnApplicationBootstrap {
     }
 
     async #populatePostgres() {
-        const schema = Buch.name.toLowerCase();
+        const schema = Hersteller.name.toLowerCase();
         this.#logger.warn(
             `${typeOrmModuleOptions.type}: Schema ${schema} wird geloescht`,
         );
@@ -86,7 +86,7 @@ export class DbPopulateService implements OnApplicationBootstrap {
         const sql = readFileSync(createScript, 'utf8');
         await this.#repo.query(sql);
 
-        const saved = await this.#repo.save(this.#buecher);
+        const saved = await this.#repo.save(this.#herstellers);
         this.#logger.warn(
             '#populatePostgres: %d Datensaetze eingefuegt',
             saved.length,
@@ -94,20 +94,20 @@ export class DbPopulateService implements OnApplicationBootstrap {
     }
 
     async #populateMySQL() {
-        let tabelle = Schlagwort.name.toLowerCase();
+        let tabelle = Hersteller.name.toLowerCase();
         this.#logger.warn(
             `${typeOrmModuleOptions.type}: Tabelle ${tabelle} wird geloescht`,
         );
         await this.#repo.query(
-            `DROP TABLE IF EXISTS ${Schlagwort.name.toLowerCase()};`,
+            `DROP TABLE IF EXISTS ${Hersteller.name.toLowerCase()};`,
         );
 
-        tabelle = Buch.name.toLowerCase();
+        tabelle = Hersteller.name.toLowerCase();
         this.#logger.warn(
             `${typeOrmModuleOptions.type}: Tabelle ${tabelle} wird geloescht`,
         );
         await this.#repo.query(
-            `DROP TABLE IF EXISTS ${Buch.name.toLowerCase()};`,
+            `DROP TABLE IF EXISTS ${Hersteller.name.toLowerCase()};`,
         );
 
         const scriptDir = resolve(configDir, 'dev', typeOrmModuleOptions.type!); // eslint-disable-line @typescript-eslint/no-non-null-assertion
@@ -118,7 +118,7 @@ export class DbPopulateService implements OnApplicationBootstrap {
         sql = readFileSync(createScript, 'utf8');
         await this.#repo.query(sql);
 
-        const saved = await this.#repo.save(this.#buecher);
+        const saved = await this.#repo.save(this.#herstellers);
         this.#logger.warn(
             '#populateMySQL: %d Datensaetze eingefuegt',
             saved.length,

@@ -1,0 +1,86 @@
+' Copyright (C) 2019 - present Juergen Zimmermann, Hochschule Karlsruhe
+'
+' This program is free software: you can redistribute it and/or modify
+' it under the terms of the GNU General Public License as published by
+' the Free Software Foundation, either version 3 of the License, or
+' (at your option) any later version.
+'
+' This program is distributed in the hope that it will be useful,
+' but WITHOUT ANY WARRANTY; without even the implied warranty of
+' MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+' GNU General Public License for more details.
+'
+' You should have received a copy of the GNU General Public License
+' along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+' Preview durch <Alt>d
+
+@startuml Controller-Klasse
+
+interface Promise<T>
+
+package @nestjs/graphql {
+  class "@Resolver" as Resolver
+  hide Resolver circle
+
+  class "@UseGuards" as UseGuards
+  hide UseGuards circle
+
+  class "@UseInterceptors" as UseInterceptors
+  hide UseInterceptors circle
+
+  class "@Mutation" as Mutation
+  hide Mutation circle
+
+  class "@Args" as Args
+  hide Args circle
+}
+
+package security.auth {
+  class "type Role = 'ADMIN' | 'MITARBEITER'" as Role
+  hide Role circle
+
+  class "@Roles" as Roles
+  hide Roles circle
+
+  Roles .right.> Role
+}
+
+package hersteller #DDDDDD {
+  package entity #FFFFFF {
+    class Hersteller <<entity>>
+  }
+
+  package service #FFFFFF {
+    class HerstellerWriteService << control >>
+  }
+
+  class "type HerstellerDTO = Omit<Hersteller, 'aktualisiert' | 'erzeugt'}" as HerstellerDTO
+  hide HerstellerDTO circle
+
+  class HerstellerMutationResolver << control >> << @Resolver() >> << @UseGuards() >> << @UseInterceptors() >> {
+    + @Mutation() @Roles() async create(@Args() hersteller: Hersteller): Promise<string>
+    + @Mutation() @Roles() async update(@Args() hersteller: HerstellerDTO): Promise<number>
+    + @Mutation() @Roles() async delete(@Args() id: string): Promise<boolean>
+  }
+
+  HerstellerMutationResolver o-down-> "1" HerstellerWriteService : service
+
+  HerstellerMutationResolver ..> Hersteller
+  HerstellerMutationResolver ..> HerstellerDTO
+  HerstellerDTO .up.> Hersteller
+  HerstellerMutationResolver ..> Promise
+  HerstellerMutationResolver ..> Resolver
+
+  HerstellerMutationResolver .up.> Roles
+  HerstellerMutationResolver .up.> Role
+
+  HerstellerDTO .[hidden].> Promise
+  HerstellerDTO .[hidden].> Resolver
+}
+
+hide empty members
+
+footer (c) Alexey Safonov
+
+@enduml
